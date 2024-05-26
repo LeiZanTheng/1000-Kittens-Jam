@@ -1,4 +1,4 @@
-class_name OrangeCat
+class_name NerdCat
 extends Area2D
 
 # Drag and click variables
@@ -10,7 +10,7 @@ var out_of_bound : bool = false
 
 # Random stuff
 var found_target : bool = false
-var merge_target : OrangeCat = null
+var merge_target : NerdCat = null
 var allow_patrol : bool = true
 var tween : Tween
 var is_merging : bool = false
@@ -23,7 +23,7 @@ var patrol_time_speed : float = 0.5
 var time_btw_patrol : float = 1.3
 
 func _process(_delta: float) -> void:
-	print(Global.mouse_occupied)
+	
 	# Keep these cat in bound
 	global_position.x = clamp(global_position.x, 0 + 100, get_viewport().content_scale_size.x - 100)
 	global_position.y = clamp(global_position.y, 0 + 100, get_viewport().content_scale_size.y - 100)
@@ -63,7 +63,7 @@ func _on_mouse_exited() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	# Allow merge if target is the same class, haven't found any other target yet and this entity is being dragged by player
 	# Allow merge if target isn't tagged or merged by other entity
-	if area is OrangeCat and not found_target and can_dragged:
+	if area is NerdCat and not found_target and can_dragged:
 		if not area.is_target and not area.can_merge:
 			can_merge = true
 			found_target = true
@@ -95,10 +95,12 @@ func _merge() -> void:
 	Global.mouse_occupied = false
 	if merge_target != null : merge_target.queue_free()
 	self.queue_free()
+	Global.mouse_occupied = false
 	_spawn_new_cat(merge_position)
 
 func _spawn_new_cat(spawn_pos : Vector2) -> void:
-	const NEXT_CAT := preload("res://Scenes/Entities/nerd_cat.tscn")
+	Global.mouse_occupied = false
+	const NEXT_CAT := preload("res://Scenes/Entities/wizard_cat.tscn")
 	var cur_cat := NEXT_CAT.instantiate()
 	cur_cat.position = spawn_pos
 	get_parent().add_child(cur_cat)
@@ -112,3 +114,5 @@ func _patrol() -> void:
 	tween.tween_property(self, "global_position", patrol_destination, patrol_time_speed).set_ease(Tween.EASE_OUT)
 	await get_tree().create_timer(time_btw_patrol).timeout
 	allow_patrol = true
+
+

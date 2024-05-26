@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjmcor27b02mc"]
+
+[ext_resource type="Script" path="res://Scripts/nerd_cat.gd" id="1_u62d8"]
+[ext_resource type="Texture2D" uid="uid://rlcuytlrd012" path="res://Assets/Arts/SPRITE_SHEET.png" id="1_uebgb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_au8bd"]
+size = Vector2(248, 296)
+
+[node name="nerd_cat" type="Area2D"]
+script = ExtResource("1_u62d8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_uebgb")
+region_enabled = true
+region_rect = Rect2(360, 0, 360, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-12, -12)
+shape = SubResource("RectangleShape2D_au8bd")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

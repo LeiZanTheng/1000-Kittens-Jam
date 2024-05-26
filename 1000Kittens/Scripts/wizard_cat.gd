@@ -1,4 +1,4 @@
-class_name OrangeCat
+class_name WizardCat
 extends Area2D
 
 # Drag and click variables
@@ -10,7 +10,7 @@ var out_of_bound : bool = false
 
 # Random stuff
 var found_target : bool = false
-var merge_target : OrangeCat = null
+var merge_target : WizardCat = null
 var allow_patrol : bool = true
 var tween : Tween
 var is_merging : bool = false
@@ -23,7 +23,7 @@ var patrol_time_speed : float = 0.5
 var time_btw_patrol : float = 1.3
 
 func _process(_delta: float) -> void:
-	print(Global.mouse_occupied)
+	
 	# Keep these cat in bound
 	global_position.x = clamp(global_position.x, 0 + 100, get_viewport().content_scale_size.x - 100)
 	global_position.y = clamp(global_position.y, 0 + 100, get_viewport().content_scale_size.y - 100)
@@ -49,7 +49,7 @@ func _process(_delta: float) -> void:
 # Detect dragging stuff
 func _on_mouse_entered() -> void:
 	is_touched = true
-	if not Global.mouse_occupied and not is_merging:
+	if not Global.mouse_occupied:
 		can_dragged = true
 		Global.mouse_occupied = true
 
@@ -63,7 +63,7 @@ func _on_mouse_exited() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	# Allow merge if target is the same class, haven't found any other target yet and this entity is being dragged by player
 	# Allow merge if target isn't tagged or merged by other entity
-	if area is OrangeCat and not found_target and can_dragged:
+	if area is WizardCat and not found_target and can_dragged:
 		if not area.is_target and not area.can_merge:
 			can_merge = true
 			found_target = true
