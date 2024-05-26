@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://c870482r50t2q"]
+
+[ext_resource type="PackedScene" uid="uid://bq0dr7c7a7oof" path="res://Scenes/Entities/orange_cat.tscn" id="1_p7o3g"]
+
+[node name="World" type="Node2D"]
+
+[node name="orange_cat" parent="." instance=ExtResource("1_p7o3g")]
+position = Vector2(848, 488)
+
+[node name="orange_cat2" parent="." instance=ExtResource("1_p7o3g")]
+position = Vector2(1526, 707)
+
+[node name="orange_cat3" parent="." instance=ExtResource("1_p7o3g")]
+position = Vector2(1134, 735)
