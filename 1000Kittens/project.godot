@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="1000Kittens"
+config/name="Kitten Dragger"
 run/main_scene="res://Scenes/Levels/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://Assets/Arts/chonlay.png"
 
 [autoload]
 

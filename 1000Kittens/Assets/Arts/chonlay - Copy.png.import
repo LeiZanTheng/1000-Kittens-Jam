@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://q8djcacdxrgi"
-path="res://.godot/imported/icon.png-29b5b9a79b1afc6f924e4a69174bd090.ctex"
+uid="uid://b45nokw6e33vb"
+path="res://.godot/imported/chonlay - Copy.png-32b9555eb9a7af9164950bff849bedcc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Arts/icon.png"
-dest_files=["res://.godot/imported/icon.png-29b5b9a79b1afc6f924e4a69174bd090.ctex"]
+source_file="res://Assets/Arts/chonlay - Copy.png"
+dest_files=["res://.godot/imported/chonlay - Copy.png-32b9555eb9a7af9164950bff849bedcc.ctex"]
 
 [params]
 
