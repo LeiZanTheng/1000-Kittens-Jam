@@ -1,6 +1,7 @@
-class_name WizardCat
+class_name SageCat
 extends Area2D
 
+@onready var counter_display : TextureProgressBar = $ProgressBar
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
 @onready var pop_sfx: AudioStreamPlayer = $PopSFX
 
@@ -13,11 +14,12 @@ var out_of_bound : bool = false
 
 # Random stuff
 var found_target : bool = false
-var merge_target : WizardCat = null
+var merge_target : SageCat = null
 var allow_patrol : bool = true
 var tween : Tween
 var is_merging : bool = false
 var target_list : Array
+var merge_counter : int = 1
 var allow_meow : bool = true
 
 # Entity's statistic
@@ -26,8 +28,12 @@ var puff_size : float = 0.25
 var patrol_range : float = 50
 var patrol_time_speed : float = 0.5
 var time_btw_patrol : float = 1.3
+var merge_amount_require : int = 5
 
 func _process(_delta: float) -> void:
+	# Display the merge counter
+	counter_display.value = (merge_counter * 1.0 / merge_amount_require * 1.0) * 100.0
+	
 	# Keep these cat in bound
 	global_position.x = clamp(global_position.x, 0 + 100, get_viewport().content_scale_size.x - 100)
 	global_position.y = clamp(global_position.y, 0 + 100, get_viewport().content_scale_size.y - 100)
@@ -81,7 +87,7 @@ func _on_mouse_exited() -> void:
 
 # Detect merge target
 func _on_area_entered(area: Area2D) -> void:
-	if area is WizardCat:
+	if area is SageCat:
 		target_list.append(area)
 	
 func _on_area_exited(area: Area2D) -> void:
@@ -111,12 +117,23 @@ func _merge() -> void:
 	Global.mouse_occupied = false
 	if merge_target != null : merge_target.queue_free()
 	self.queue_free()
-	_spawn_new_cat(merge_position)
+	if merge_counter + merge_target.merge_counter >= merge_amount_require:
+		_spawn_new_cat(merge_position)
+	else:
+		_keep_merging(merge_position)
 
 func _spawn_new_cat(spawn_pos : Vector2) -> void:
-	const NEXT_CAT := preload("res://Scenes/Entities/sage_cat.tscn")
+	const NEXT_CAT := preload("res://Scenes/Entities/spirit_cat.tscn")
 	var cur_cat := NEXT_CAT.instantiate()
 	cur_cat.position = spawn_pos
+	get_parent().add_child(cur_cat)
+
+# If the merge amount require isn't enough then merge the current merge amount of 2 cats together
+func _keep_merging(spawn_pos : Vector2) -> void:
+	const THIS_CAT := preload("res://Scenes/Entities/sage_cat.tscn")
+	var cur_cat := THIS_CAT.instantiate()
+	cur_cat.position = spawn_pos
+	cur_cat.merge_counter = merge_counter + merge_target.merge_counter
 	get_parent().add_child(cur_cat)
 
 func _patrol() -> void:

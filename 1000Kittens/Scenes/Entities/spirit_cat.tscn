@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://dn4d86pkjsj6e"]
+
+[ext_resource type="Script" path="res://Scripts/spirit_cat.gd" id="1_h10i2"]
+[ext_resource type="Texture2D" uid="uid://rlcuytlrd012" path="res://Assets/Arts/SPRITE_SHEET.png" id="2_h7qyr"]
+[ext_resource type="Texture2D" uid="uid://bs70texclx58n" path="res://Assets/Arts/under_bar.png" id="3_ig22p"]
+[ext_resource type="Texture2D" uid="uid://bbd3fwnfa1b7k" path="res://Assets/Arts/over_bar.png" id="4_mrspe"]
+[ext_resource type="Texture2D" uid="uid://8uxpc1xpf0iy" path="res://Assets/Arts/progress_bar.png" id="5_e3b1b"]
+[ext_resource type="AudioStream" uid="uid://der7hxeeqc31d" path="res://Assets/Sounds/meow-1.mp3" id="6_0k6bp"]
+[ext_resource type="AudioStream" uid="uid://qw5weewx38wf" path="res://Assets/Sounds/pop_sfx.mp3" id="7_it5nl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4fxxa"]
+size = Vector2(293, 336)
+
+[node name="spirit_cat" type="Area2D"]
+script = ExtResource("1_h10i2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_h7qyr")
+region_enabled = true
+region_rect = Rect2(1440, 0, 360, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2.5, 8)
+shape = SubResource("RectangleShape2D_4fxxa")
+
+[node name="ProgressBar" type="TextureProgressBar" parent="."]
+offset_left = -179.683
+offset_top = -376.375
+offset_right = 180.317
+offset_bottom = -16.3746
+texture_under = ExtResource("3_ig22p")
+texture_over = ExtResource("4_mrspe")
+texture_progress = ExtResource("5_e3b1b")
+tint_under = Color(0.294118, 0.286275, 0.25098, 1)
+tint_over = Color(0, 0, 0, 1)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_0k6bp")
+pitch_scale = 0.7
+
+[node name="PopSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_it5nl")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

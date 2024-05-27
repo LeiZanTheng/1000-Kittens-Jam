@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bq0dr7c7a7oof"]
+[gd_scene load_steps=6 format=3 uid="uid://bq0dr7c7a7oof"]
 
 [ext_resource type="Script" path="res://Scripts/orange_cat.gd" id="1_0rgvi"]
 [ext_resource type="Texture2D" uid="uid://rlcuytlrd012" path="res://Assets/Arts/SPRITE_SHEET.png" id="1_ak108"]
+[ext_resource type="AudioStream" uid="uid://n4tj7oqks65d" path="res://Assets/Sounds/meow_jEHtSyd.mp3" id="3_yeawc"]
+[ext_resource type="AudioStream" uid="uid://qw5weewx38wf" path="res://Assets/Sounds/pop_sfx.mp3" id="4_6m6bo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l3i1l"]
 size = Vector2(344, 208)
@@ -17,6 +19,13 @@ region_rect = Rect2(0, 0, 360, 360)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(4, -8)
 shape = SubResource("RectangleShape2D_l3i1l")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_yeawc")
+volume_db = 5.0
+
+[node name="PopSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_6m6bo")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="area_exited" from="." to="." method="_on_area_exited"]

@@ -1,6 +1,9 @@
 class_name OrangeCat
 extends Area2D
 
+@onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var pop_sfx: AudioStreamPlayer = $PopSFX
+
 # Drag and click variables
 var can_dragged : bool = false
 var can_merge : bool = false
@@ -14,6 +17,8 @@ var merge_target : OrangeCat = null
 var allow_patrol : bool = true
 var tween : Tween
 var is_merging : bool = false
+var target_list : Array
+var allow_meow : bool = true
 
 # Entity's statistic
 var merge_speed : float = 0.15
@@ -23,17 +28,30 @@ var patrol_time_speed : float = 0.5
 var time_btw_patrol : float = 1.3
 
 func _process(_delta: float) -> void:
-	print(Global.mouse_occupied)
 	# Keep these cat in bound
 	global_position.x = clamp(global_position.x, 0 + 100, get_viewport().content_scale_size.x - 100)
 	global_position.y = clamp(global_position.y, 0 + 100, get_viewport().content_scale_size.y - 100)
 	
+	# Allow merge if target is the same class, haven't found any other target yet and this entity is being dragged by player
+	# Allow merge if target isn't tagged or merged by other entity
+	for current_target in target_list:
+		if not found_target and can_dragged:
+			if not current_target.is_target and not current_target.can_merge:
+				can_merge = true
+				found_target = true
+				merge_target = current_target
+				merge_target.is_target = true
+	
 	# Perform drag, if not then go around
 	if can_dragged and Input.is_action_pressed("mouse_press") and not is_merging:
 		if tween != null:
-			tween.kill() # Stop all animtion or progress to drag the entity (except merging anim)
+			tween.kill() # Stop all animtion or progress to drag the entity (except merging anim) 
 		global_position = get_global_mouse_position()
+		if allow_meow:
+			allow_meow = false
+			audio_stream_player.play()
 	elif allow_patrol:
+		allow_meow = true
 		_patrol()
 
 	# Increase entity size if found merge target or is target itself
@@ -44,6 +62,8 @@ func _process(_delta: float) -> void:
 
 	# Perform merge
 	if can_merge and Input.is_action_just_released("mouse_press"):
+		can_dragged = false
+		Global.mouse_occupied = false
 		_merge()
 
 # Detect dragging stuff
@@ -61,16 +81,11 @@ func _on_mouse_exited() -> void:
 
 # Detect merge target
 func _on_area_entered(area: Area2D) -> void:
-	# Allow merge if target is the same class, haven't found any other target yet and this entity is being dragged by player
-	# Allow merge if target isn't tagged or merged by other entity
-	if area is OrangeCat and not found_target and can_dragged:
-		if not area.is_target and not area.can_merge:
-			can_merge = true
-			found_target = true
-			merge_target = area
-			merge_target.is_target = true
-
+	if area is OrangeCat:
+		target_list.append(area)
+	
 func _on_area_exited(area: Area2D) -> void:
+	target_list.erase(area)
 	# Target exits entity area
 	if area == merge_target:
 		found_target = false
@@ -86,6 +101,7 @@ func _unpuff() -> void:
 
 func _merge() -> void:
 	is_merging = true
+	pop_sfx.play()
 	var merge_position := Vector2((global_position.x + merge_target.global_position.x) / 2.0, (global_position.y + merge_target.global_position.y) / 2.0)
 	tween = create_tween()
 	tween.set_parallel()

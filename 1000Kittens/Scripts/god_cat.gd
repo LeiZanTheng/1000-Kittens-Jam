@@ -1,4 +1,4 @@
-class_name WizardCat
+class_name GodCat
 extends Area2D
 
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
@@ -13,7 +13,7 @@ var out_of_bound : bool = false
 
 # Random stuff
 var found_target : bool = false
-var merge_target : WizardCat = null
+var merge_target : GodCat = null
 var allow_patrol : bool = true
 var tween : Tween
 var is_merging : bool = false
@@ -81,7 +81,7 @@ func _on_mouse_exited() -> void:
 
 # Detect merge target
 func _on_area_entered(area: Area2D) -> void:
-	if area is WizardCat:
+	if area is GodCat:
 		target_list.append(area)
 	
 func _on_area_exited(area: Area2D) -> void:
@@ -114,7 +114,7 @@ func _merge() -> void:
 	_spawn_new_cat(merge_position)
 
 func _spawn_new_cat(spawn_pos : Vector2) -> void:
-	const NEXT_CAT := preload("res://Scenes/Entities/sage_cat.tscn")
+	const NEXT_CAT := preload("res://Scenes/Entities/god_cat.tscn")
 	var cur_cat := NEXT_CAT.instantiate()
 	cur_cat.position = spawn_pos
 	get_parent().add_child(cur_cat)

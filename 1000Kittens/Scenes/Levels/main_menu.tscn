@@ -1,0 +1,89 @@
+[gd_scene load_steps=5 format=3 uid="uid://bm1q0xmjkhc7k"]
+
+[ext_resource type="FontFile" uid="uid://btthfisfe4jvv" path="res://Assets/Fonts/Espressonal.otf" id="1_c5pse"]
+[ext_resource type="Script" path="res://Scenes/Levels/main_menu.gd" id="1_li07e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ma3gw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i5is7"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_li07e")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_c5pse")
+theme_override_font_sizes/font_size = 760
+text = "Kittens Dragger"
+horizontal_alignment = 1
+
+[node name="Sep" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Play" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 0.12549, 0.631373, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.615686, 0, 0.376471, 1)
+theme_override_colors/font_focus_color = Color(1, 0.12549, 0.631373, 1)
+theme_override_fonts/font = ExtResource("1_c5pse")
+theme_override_font_sizes/font_size = 476
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ma3gw")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_ma3gw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_ma3gw")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_ma3gw")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ma3gw")
+text = "Play
+"
+
+[node name="Quit" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 0.12549, 0.631373, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.615332, 2.45467e-06, 0.375958, 1)
+theme_override_colors/font_focus_color = Color(1, 0.12549, 0.631373, 1)
+theme_override_fonts/font = ExtResource("1_c5pse")
+theme_override_font_sizes/font_size = 476
+theme_override_styles/normal = SubResource("StyleBoxEmpty_i5is7")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_i5is7")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_i5is7")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_i5is7")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i5is7")
+text = "Quit
+"
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 2
+offset_left = 2401.0
+offset_top = 3002.0
+offset_right = 8161.0
+offset_bottom = 3952.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_c5pse")
+theme_override_font_sizes/font_size = 175
+text = "LeiZanTheng"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://88cjxp688hq8"]
+
+[ext_resource type="Script" path="res://Scripts/god_cat.gd" id="1_1aftd"]
+[ext_resource type="Texture2D" uid="uid://rlcuytlrd012" path="res://Assets/Arts/SPRITE_SHEET.png" id="2_7iaji"]
+[ext_resource type="AudioStream" uid="uid://bxs4rxml3evok" path="res://Assets/Sounds/m-e-o-w.mp3" id="3_obm2g"]
+[ext_resource type="AudioStream" uid="uid://coci2f4ploti4" path="res://Assets/Sounds/old-victory-sound-roblox-made-with-Voicemod.mp3" id="4_w5n3c"]
+[ext_resource type="AudioStream" uid="uid://qw5weewx38wf" path="res://Assets/Sounds/pop_sfx.mp3" id="5_knjsl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4fxxa"]
+size = Vector2(293, 336)
+
+[node name="god_cat" type="Area2D"]
+script = ExtResource("1_1aftd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_7iaji")
+region_enabled = true
+region_rect = Rect2(1800, 0, 360, 360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2.5, 8)
+shape = SubResource("RectangleShape2D_4fxxa")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_obm2g")
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_w5n3c")
+autoplay = true
+
+[node name="PopSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_knjsl")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
